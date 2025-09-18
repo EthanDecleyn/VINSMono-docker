@@ -1,0 +1,16 @@
+services:
+  vinsmono:
+    container_name: vinsmono_container
+    image: ros:vins-mono
+    volumes: 
+      - /media/ethan/T7 Shield:/root/dataset:ro # Setup the dataset path
+      - /tmp/.X11-UNIX:/tmp/.X11-unix -e DISPLAY # X11 forwarding to connect the display of the host to the container
+      - $HOME/.Xauthority:/root/.Xauthority
+    environment:
+      - DISPLAY=${DISPLAY}
+    tty:  true
+    attach: false
+    working_dir: /root
+    network_mode: host
+    
+    
