@@ -1,16 +1,23 @@
 services:
   vinsmono:
     container_name: vinsmono_container
-    image: ros:vins-mono
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ros:vins-mono-local
     volumes: 
-      - /media/ethan/T7 Shield:/root/dataset:ro # Setup the dataset path
-      - /tmp/.X11-UNIX:/tmp/.X11-unix -e DISPLAY # X11 forwarding to connect the display of the host to the container
-      - $HOME/.Xauthority:/root/.Xauthority
+      - /tmp/.X11-UNIX:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - /media/ethan/T7 Shield/catacombs-dataset:/root/dataset:ro
     environment:
+      - QT_X11_NO_MITSHM=1
       - DISPLAY=${DISPLAY}
     tty:  true
-    attach: false
+    attach: true
     working_dir: /root
     network_mode: host
+    # command: /bin/bash -c "echo 'source /root/catkin_ws/devel/setup.bash' >> /root/.bashrc"
+    # command: >
+    #   /bin/bash -c 'roscore'
     
     

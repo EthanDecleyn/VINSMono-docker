@@ -5,14 +5,6 @@ ENV CATKIN_WS=/root/catkin_ws
 
 
 RUN   apt-get update && apt-get install -y \
-      cmake \
-      libatlas-base-dev \
-      libeigen3-dev \
-      libgoogle-glog-dev \
-      libsuitesparse-dev \
-      python-catkin-tools
-
-RUN   apt-get update && apt-get install -y \
       ros-${ROS_DISTRO}-rqt \
       ros-${ROS_DISTRO}-rqt-common-plugins \
       ros-${ROS_DISTRO}-turtlesim \
@@ -22,6 +14,14 @@ RUN   apt-get update && apt-get install -y \
       ros-${ROS_DISTRO}-rviz \
       ros-${ROS_DISTRO}-tf && \
       rm -rf /var/lib/apt/lists/*
+
+RUN   apt-get update && apt-get install -y \
+      cmake \
+      libatlas-base-dev \
+      libeigen3-dev \
+      libgoogle-glog-dev \
+      libsuitesparse-dev \
+      python-catkin-tools
       
 # set up thread number for building
 RUN   if [ "x$(nproc)" = "x1" ] ; then export USE_PROC=1 ; \
