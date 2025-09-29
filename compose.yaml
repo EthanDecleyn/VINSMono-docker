@@ -2,13 +2,14 @@ services:
   vinsmono:
     container_name: vinsmono_container
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ros1-vinsmono
+      dockerfile: ros1-vinsmono/Dockerfile
     image: ros:vins-mono-local
     volumes: 
       - /tmp/.X11-UNIX:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority:rw
       - /media/ethan/T7 Shield/catacombs-dataset:/root/dataset:ro
+      - /dev/dri:/dev/dri
     environment:
       - QT_X11_NO_MITSHM=1
       - DISPLAY=${DISPLAY}
@@ -16,8 +17,22 @@ services:
     attach: true
     working_dir: /root
     network_mode: host
-    # command: /bin/bash -c "echo 'source /root/catkin_ws/devel/setup.bash' >> /root/.bashrc"
-    # command: >
-    #   /bin/bash -c 'roscore'
     
+  data:
+    container_name: data_container
+    build:
+      context: ros2-readbags
+      dockerfile: ros2-readbags/Dockerfile
+    image: ros:jazzy-read-catacombs
+    tty: true
+    volumes: 
+      - /tmp/.X11-UNIX:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - /media/ethan/T7 Shield/catacombs-dataset:/root/dataset:ro
+      - /dev/dri:/dev/dri
+    environment:
+      - QT_X11_NO_MITSHM=1
+      - DISPLAY=${DISPLAY}
+    working_dir: /root
+    network_mode: host
     
