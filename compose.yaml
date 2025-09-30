@@ -3,10 +3,10 @@ services:
     container_name: vinsmono_container
     build:
       context: ros1-vinsmono
-      dockerfile: ros1-vinsmono/Dockerfile
+      dockerfile: Dockerfile
     image: ros:vins-mono-local
     volumes: 
-      - /tmp/.X11-UNIX:/tmp/.X11-unix
+      - /tmp/.X11-UNIX:/tmp/.X11-unix:rw
       - $HOME/.Xauthority:/root/.Xauthority:rw
       - /media/ethan/T7 Shield/catacombs-dataset:/root/dataset:ro
       - /dev/dri:/dev/dri
@@ -22,9 +22,11 @@ services:
     container_name: data_container
     build:
       context: ros2-readbags
-      dockerfile: ros2-readbags/Dockerfile
+      dockerfile: Dockerfile
     image: ros:jazzy-read-catacombs
+    stdin_open: true
     tty: true
+    attach: true
     volumes: 
       - /tmp/.X11-UNIX:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority:rw

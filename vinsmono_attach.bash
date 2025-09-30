@@ -1,0 +1,1 @@
+docker exec -it vinsmono_container bash
